@@ -1,0 +1,12 @@
+# IAMLive stuff
+**/*.pem
+**/*.log
+iamlive/iamlive
+iamlive/*.tar.gz
+env-vars.json
+template-gen.yaml
+
+# Python
+**/*.pyc
+**/__pycache__
+
