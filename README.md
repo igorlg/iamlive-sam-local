@@ -51,16 +51,25 @@ You can also keep the iamlive proxy running and run the Lambda function multiple
 ```bash
 $ make iamlive-proxy
 
+## running lambda
 $ make sam iamlive-output
 # [lambda runs]
 #
 # [generate iamlive.log and display output]]
 
-## running again
+## running lambda again
 $ make sam iamlive-output
 [...]
 ```
 
 To finish, run `make clean` to remove the temporary files *and the iamlive.log output*!
 
+```bash
+$ make clean
 
+docker kill iamlive 2>/dev/null || true
+find . -type f -name ca.pem -delete
+rm -f iamlive.log env-vars.json template-gen.yaml
+```
+
+Questions via Issues and PRs are welcome!
