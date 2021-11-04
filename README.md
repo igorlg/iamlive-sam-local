@@ -1,6 +1,6 @@
 Demo of how to run [iamlive](https://github.com/iann0036/iamlive) with SAM Local, useful for generating IAM Policies as part of CI builds.
 
-> by Igor Gentil <igorlg@amazon.com>
+> by Igor Gentil <igorlg@amazon.com> and Geoff Singer <singergs@amazon.com>
 
 # Start Here
 
