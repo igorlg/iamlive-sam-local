@@ -47,7 +47,7 @@ sam: env-vars.json template-gen.yaml
 		--docker-network $(DOCKER_NETWORK_NAME)
 
 clean:
-	docker kill iamlive 2>/dev/null || true
+	docker kill iamlive >/dev/null 2>&1 || true
 	find . -type f -name ca.pem -delete
 	rm -f iamlive.log env-vars.json template-gen.yaml
 
