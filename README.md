@@ -1,5 +1,7 @@
 Demo of how to run [iamlive](https://github.com/iann0036/iamlive) with SAM Local, useful for generating IAM Policies as part of CI builds.
 
+Questions via Issues and PRs are welcome!
+
 > by Igor Gentil <igorlg@amazon.com> and Geoff Singer <singergs@amazon.com>
 
 # Start Here
@@ -72,4 +74,19 @@ find . -type f -name ca.pem -delete
 rm -f iamlive.log env-vars.json template-gen.yaml
 ```
 
-Questions via Issues and PRs are welcome!
+# scripts/generate.py
+
+One of the pre-requisites for this solution to work is that three Environment variables need to be set in the Lambda container, so it can proxy requests to iamlive. These variables are:
+
+- HTTP_PROXY
+- HTTPS_PROXY
+- AWS_CA_BUNDLE
+
+> Details on why they are required can be found [here](https://github.com/iann0036/iamlive#proxy-mode)
+
+In order to make this work, two conditions need to be satisfied:
+
+1. The variables are set in a JSON file, which is passed to `sam local invoke`, and
+2. the variables need to exist in the SAM template.
+
+To avoid requiring the users to set these themselves in their functions, this script creates a temporary copy of `template.yaml`, adds the variables to the `Globals` section and generates a (temporary) `env-vars.json` file. Running `make clean` - which is part of `make all` - will remove these files.
