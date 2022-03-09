@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - ls -al
+      - docker build -t iamadocker .
+  build:
+    commands:
+      - docker network create my-net 2>/dev/null || true
+      - docker run --network my-net --rm -d --name iamlive -v "${PWD}:/iamlive" iamadocker
+      - docker cp iamlive:/app/ca.pem hello_world/ca.pem
+      - sam build --use-container
+      - sam local invoke --docker-network my-net --container-env-vars env-vars.json --env-vars env-vars.json
+      - docker exec iamlive kill -HUP 1
+      - cat iamlive/iamlive.log
+  post_build:
+    commands:
+      - docker kill iamlive >/dev/null 2>&1 || true
+      - docker network rm my-net
+
